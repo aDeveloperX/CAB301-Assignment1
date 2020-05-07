@@ -1,6 +1,10 @@
 import java.util.Scanner;
 
 public class Main {
+    private static boolean isLoggedInStaff = false;
+    private static boolean isInStaffMenu = false;
+    private static Scanner scanner;
+
     private static void displayMainMenu(){
         System.out.println("Welcome to the Commuity Library\n==========Main Menu==========");
         System.out.println("1. Staff Login\n2. Member Login\n0. Exit");
@@ -24,7 +28,8 @@ public class Main {
     private static void displaySelection(int index){
         switch (index){
             case 1:
-                displayStaffMenu();
+                isInStaffMenu = true;
+                staffMenuHandler();
                 break;
             case 2:
                 displayMemberMenu();
@@ -34,28 +39,51 @@ public class Main {
         }
     }
 
-    private static void staffMenuHandler(int index){
-        switch (index) {
-            case 1:
+    private static void staffMenuHandler(){
+
+        do{
+            loginStaff();
+            if(isLoggedInStaff){
                 displayStaffMenu();
+                int staffMenuChoice = scanner.nextInt();
+                staffMenuChoiceHandler(staffMenuChoice);
+            }
+        }while (isInStaffMenu);
+
+    }
+
+    private static void staffMenuChoiceHandler(int index){
+        switch (index){
+            case 1:
+            case 0: isInStaffMenu = false;
+        }
+    }
+
+    private static void loginStaff(){
+        while(!isLoggedInStaff){
+            System.out.println("Please enter username");
+            String username = scanner.next();
+            System.out.println("Please enter password");
+            String password = scanner.next();
+            if(username.equals("staff") && password.equals("today123")){
+                isLoggedInStaff = true;
+                System.out.println("Login Successed");
+            }else{
+                System.out.println("Can't find matched user");
                 break;
-            case 2:
-                displayMemberMenu();
-                break;
-            case 0:
-                System.exit(0);
+            }
         }
     }
 
     public static void main(String[] args) {
        do {
-           Scanner scanner = new Scanner(System.in);
+           scanner = new Scanner(System.in);
            displayMainMenu();
            int menuChoice = scanner.nextInt();
            displaySelection(menuChoice);
-           do {
-               int userChoice = scanner.nextInt();
-           }while(true);
+
+
+
        }while (true);
     }
 }

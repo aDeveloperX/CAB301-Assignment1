@@ -6,6 +6,8 @@ public class Movie {
     private Genre genre;
     private Classification classification;
     private String date;
+    private int borrowedCounter = 0;
+    private int numberOfCopies = 0;
 
     public Movie(String title, int starring, String director, String duration, Genre genre, Classification classification, String date) {
         this.title = title;
