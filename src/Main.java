@@ -67,25 +67,50 @@ public class Main {
     }
 
     private static void registerNewMember(){
+        System.out.println("=============================");
          System.out.println("Please enter the member's surname");
          String surname = scanner.next();
+        System.out.println("=============================");
          System.out.println("Please enter the member's givenname");
          String givenname = scanner.next();
+         while(memberCollection.containsMember(surname+givenname)){
+             System.out.println("=============================");
+             System.out.println("Username already exists");
+             System.out.println("=============================");
+             System.out.println("Please enter the member's surname");
+             surname = scanner.next();
+             System.out.println("=============================");
+             System.out.println("Please enter the member's givenname");
+             givenname = scanner.next();
+
+         }
+        System.out.println("=============================");
          System.out.println("Please enter the member's address");
          //prevent reading empty string
          scanner.nextLine();
          String address = scanner.nextLine();
+        System.out.println("=============================");
          System.out.println("Please enter the member's phone number");
          String phonenumber = scanner.next();
+        System.out.println("=============================");
          System.out.println("Please enter the member's password");
          String password = scanner.next();
          while(password.length() != 4 || !isNumeric(password)){
+             System.out.println("=============================");
              System.out.println("The password should be 4 digits integer");
              password = scanner.next();
          }
          Member member = new Member(surname, givenname, address, phonenumber, password);
          memberCollection.addNewMember(member);
+        System.out.println("=============================");
          System.out.println("User Registered!");
+    }
+
+    private static void findMembersNumber(){
+        System.out.println("=============================");
+        System.out.println("Please enter the username");
+        String name = scanner.next();
+        System.out.println("The result is: " + memberCollection.getPhoneNumberByName(name));
     }
 
     private static void staffMenuChoiceHandler(int index){
@@ -93,21 +118,26 @@ public class Main {
             case 1:
             case 2:
             case 3: registerNewMember(); break;
+            case 4: findMembersNumber(); break;
             case 0: isInStaffMenu = false;
         }
     }
 
     private static void loginStaff(){
         while(!isLoggedInStaff){
+            System.out.println("=============================");
             System.out.println("Please enter username");
             String username = scanner.next();
+            System.out.println("=============================");
             System.out.println("Please enter password");
             String password = scanner.next();
             if(username.equals("staff") && password.equals("today123")){
                 isLoggedInStaff = true;
+                System.out.println("=============================");
                 System.out.println("Login Successed");
             }else{
-                System.out.println("Can't find matched user");
+                System.out.println("=============================");
+                System.out.println("Can't find matched staff account");
                 break;
             }
         }

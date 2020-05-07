@@ -1,8 +1,8 @@
 import java.util.ArrayList;
 
 public class MemberCollection{
-    Member[] arr;
-    int index = 0;
+    private Member[] arr;
+    private int index = 0;
 
     public MemberCollection() {
         arr = new Member[20];
@@ -14,17 +14,21 @@ public class MemberCollection{
     }
 
     public boolean containsMember(String username){
-        for (int i = 0; i < arr.length; i++) {
-            if(arr[i].getName() == username){
+        for (int i = 0; i < index; i++) {
+            if(arr[i].getName().equals(username)){
                 return true;
             }
         }
         return false;
     }
 
+    public int getLength(){
+        return this.index;
+    }
+
     public String getPhoneNumberByName(String username){
-        for (int i = 0; i < arr.length; i++) {
-            if(arr[i].getName() == username){
+        for (int i = 0; i < index; i++) {
+            if(arr[i].getName().equals(username)){
                 return arr[i].getPhoneNumber();
             }
         }
