@@ -1,8 +1,14 @@
 import java.util.Scanner;
 
 public class Main {
+    //staff control
     private static boolean isLoggedInStaff = false;
     private static boolean isInStaffMenu = false;
+
+    //member control
+    private static MemberCollection memberCollection = new MemberCollection();
+
+
     private static Scanner scanner;
 
     private static void displayMainMenu(){
@@ -49,12 +55,44 @@ public class Main {
                 staffMenuChoiceHandler(staffMenuChoice);
             }
         }while (isInStaffMenu);
+    }
 
+    public static boolean isNumeric(String str)
+    {
+        for (char c : str.toCharArray())
+        {
+            if (!Character.isDigit(c)) return false;
+        }
+        return true;
+    }
+
+    private static void registerNewMember(){
+         System.out.println("Please enter the member's surname");
+         String surname = scanner.next();
+         System.out.println("Please enter the member's givenname");
+         String givenname = scanner.next();
+         System.out.println("Please enter the member's address");
+         //prevent reading empty string
+         scanner.nextLine();
+         String address = scanner.nextLine();
+         System.out.println("Please enter the member's phone number");
+         String phonenumber = scanner.next();
+         System.out.println("Please enter the member's password");
+         String password = scanner.next();
+         while(password.length() != 4 || !isNumeric(password)){
+             System.out.println("The password should be 4 digits integer");
+             password = scanner.next();
+         }
+         Member member = new Member(surname, givenname, address, phonenumber, password);
+         memberCollection.addNewMember(member);
+         System.out.println("User Registered!");
     }
 
     private static void staffMenuChoiceHandler(int index){
         switch (index){
             case 1:
+            case 2:
+            case 3: registerNewMember(); break;
             case 0: isInStaffMenu = false;
         }
     }
@@ -81,8 +119,6 @@ public class Main {
            displayMainMenu();
            int menuChoice = scanner.nextInt();
            displaySelection(menuChoice);
-
-
 
        }while (true);
     }

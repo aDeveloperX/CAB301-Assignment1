@@ -2,12 +2,15 @@ import java.util.ArrayList;
 
 public class MemberCollection{
     Member[] arr;
+    int index = 0;
 
     public MemberCollection() {
+        arr = new Member[20];
     }
 
     public void addNewMember(Member member){
-        arr[arr.length] = member;
+        arr[index] = member;
+        index++;
     }
 
     public boolean containsMember(String username){
