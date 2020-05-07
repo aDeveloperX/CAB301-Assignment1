@@ -18,4 +18,12 @@ public class Movie {
         this.classification = classification;
         this.date = date;
     }
+
+    public void setBorrowedCounter(int borrowedCounter) {
+        this.borrowedCounter = borrowedCounter;
+    }
+
+    public void setNumberOfCopies(int numberOfCopies) {
+        this.numberOfCopies = numberOfCopies;
+    }
 }
