@@ -5,7 +5,7 @@ public class MemberCollection{
     private int index = 0;
 
     public MemberCollection() {
-        arr = new Member[20];
+        arr = new Member[10];
     }
 
     public void addNewMember(Member member){
@@ -34,7 +34,4 @@ public class MemberCollection{
         }
         return "User not found";
     }
-
-
-
 }
