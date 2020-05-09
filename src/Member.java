@@ -17,18 +17,38 @@ public class Member {
         return this.name;
     }
 
+    public boolean isPasswordCorrect(String password){
+        return password.equals(this.password);
+    }
+
     public String getPhoneNumber(){
         return this.phoneNumber;
     }
 
     public boolean borrowMovie(Movie movie){
-
        if(movieCollection.insert(new Node(movie))){
-           movie.borrow();
            return true;
        }
        return false;
     }
 
+    public boolean returnMovie(Movie movie){
+       if(movieCollection.remove(movie.getTitle())){
 
+           return true;
+       }
+       return false;
+    }
+
+    public boolean hasMovie(String title){
+        return movieCollection.search(title) != null;
+    }
+
+    public void displayAllBorrowedMovies(){
+        movieCollection.iterateOver(movieCollection.getRoot());
+    }
+
+    public MovieCollection getMovieCollection() {
+        return movieCollection;
+    }
 }

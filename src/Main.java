@@ -4,6 +4,9 @@ public class Main {
     //staff control
     private static boolean isLoggedInStaff = false;
     private static boolean isInStaffMenu = false;
+    private static boolean isLoggedInMember =false;
+    private static boolean isInMemberMenu = false;
+    private static String currentMemberName = null;
 
     //member control
     private static MemberCollection memberCollection = new MemberCollection();
@@ -39,7 +42,8 @@ public class Main {
                 staffMenuHandler();
                 break;
             case 2:
-                displayMemberMenu();
+                isInMemberMenu = true;
+                memberMenuHandler();
                 break;
             case 0:
                 System.exit(0);
@@ -47,10 +51,9 @@ public class Main {
     }
 
     private static void staffMenuHandler(){
-
         do{
             loginStaff();
-            if(isLoggedInStaff){
+            while(isLoggedInStaff){
                 displayStaffMenu();
                 int staffMenuChoice = scanner.nextInt();
                 staffMenuChoiceHandler(staffMenuChoice);
@@ -58,7 +61,109 @@ public class Main {
         }while (isInStaffMenu);
     }
 
-    public static boolean isNumeric(String str){
+    private static void memberMenuHandler(){
+        do{
+            loginMember();
+            while(isLoggedInMember){
+               displayMemberMenu();
+               int memberMenuChoice = scanner.nextInt();
+               memberMenuChoiceHandler(memberMenuChoice);
+            }
+        }while (isInMemberMenu);
+    }
+
+    private static void loginMember(){
+        System.out.println("=============================");
+        System.out.println("Please enter the member's fullname");
+        String name = scanner.next();
+        System.out.println("=============================");
+        System.out.println("Please enter the password");
+        String password = scanner.next();
+        if(memberCollection.containsMember(name)){
+            if(memberCollection.getMember(name).isPasswordCorrect(password)){
+                System.out.println("Login successed!");
+                isLoggedInMember = true;
+                currentMemberName = name;
+            }else{
+                System.out.println("Incorrect password");
+                System.out.println("=============================");
+                isInMemberMenu = false;
+            }
+        }else{
+            System.out.println("Username doesn't exist!");
+            System.out.println("=============================");
+            isInMemberMenu = false;
+        }
+    }
+
+    private static void displayAllMovies(){
+        System.out.println("=========All Movies=========");
+        movieCollection.iterateOver(movieCollection.getRoot());
+        System.out.println("=============================");
+    }
+
+    private static void borrowAMovieDVD(){
+        System.out.println("=============================");
+        System.out.println("Please enter the name of the movie you want to borrow");
+        scanner.nextLine();
+        String name = scanner.nextLine();
+        if (movieCollection.search(name) == null){
+            System.out.println("Can't find the movie with name: " + name);
+            System.out.println("=============================");
+        }else{
+            Movie movie = movieCollection.search(name).movie;
+            // avoid if the user has borrowed this movie already
+            if(memberCollection.getMember(currentMemberName).hasMovie(movie.getTitle())){
+                System.out.println("You've already borrowed this movie!");
+                System.out.println("=============================");
+                //avoid there's no copies left
+            }else{
+                System.out.println("You borrowed this movie!");
+                System.out.println("=============================");
+                memberCollection.getMember(currentMemberName).borrowMovie(movie);
+                movie.borrow();
+                System.out.println(movie.getNumberOfCopies());
+            }
+        }
+
+    }
+
+    private static void listBorrowedMovies(){
+        System.out.println("========Movies You have Borrowed========");
+        memberCollection.getMember(currentMemberName).displayAllBorrowedMovies();
+        System.out.println("========================================");
+    }
+
+    private static void returnAMovieDVD(){
+        System.out.println("======================");
+        System.out.println("Please enter the name of the movie that you want to return");
+        scanner.nextLine();
+        String name = scanner.nextLine();
+        Member member =  memberCollection.getMember(currentMemberName);
+        if(member.hasMovie(name)){
+           member.returnMovie(member.getMovieCollection().search(name).movie);
+           movieCollection.search(name).movie.returnCopy();
+            System.out.println("You have returned this movie");
+            System.out.println("======================");
+            System.out.println(movieCollection.search(name).movie.getNumberOfCopies());
+        }else{
+            System.out.println("Can't find the movie name from your borrowed movies");
+            System.out.println("======================");
+        }
+    }
+
+    private static void memberMenuChoiceHandler(int index){
+        switch (index){
+            case 1: displayAllMovies(); break;
+            case 2: borrowAMovieDVD(); break;
+            case 3: returnAMovieDVD(); break;
+            case 4: listBorrowedMovies(); break;
+            case 5:  break;
+            case 0: isInMemberMenu = false; isLoggedInMember=false; currentMemberName = null;
+        }
+    }
+
+    private static boolean isNumeric(String str){
         for (char c : str.toCharArray())
         {
             if (!Character.isDigit(c)) return false;
@@ -155,8 +260,10 @@ public class Main {
         System.out.println("=============================");
         System.out.println("Please enter the date");
         String date = scanner.next();
-
-        Movie movie = new Movie(name, starring, director, duration, genre, classification, date);
+        System.out.println("=============================");
+        System.out.println("Please enter the number of copies");
+        int copies = scanner.nextInt();
+        Movie movie = new Movie(name, starring, director, duration, genre, classification, date, copies);
         if(movieCollection.insert(new Node(movie))){
             System.out.println("=============================");
             System.out.println("Movie " + name + " has been added!");
@@ -164,9 +271,6 @@ public class Main {
             System.out.println("=============================");
             System.out.println("Failed to add movie");
         }
-
-
-
     }
 
     private static void staffMenuChoiceHandler(int index){
@@ -175,29 +279,33 @@ public class Main {
             case 2: staffRemoveDVD(); break;
             case 3: registerNewMember(); break;
             case 4: findMembersNumber(); break;
-            case 0: isInStaffMenu = false;
+            case 0: isInStaffMenu = false; isLoggedInStaff = false;
         }
     }
 
     private static void loginStaff(){
-        while(!isLoggedInStaff){
-            System.out.println("=============================");
-            System.out.println("Please enter username");
-            String username = scanner.next();
-            System.out.println("=============================");
-            System.out.println("Please enter password");
-            String password = scanner.next();
-            if(username.equals("staff") && password.equals("today123")){
-                isLoggedInStaff = true;
-                System.out.println("=============================");
-                System.out.println("Login Successed");
-            }else{
-                System.out.println("=============================");
-                System.out.println("Can't find matched staff account");
-                break;
-            }
+
+           while(!isLoggedInStaff){
+               System.out.println("=============================");
+               System.out.println("Please enter username");
+               String username = scanner.next();
+               System.out.println("=============================");
+               System.out.println("Please enter password");
+               String password = scanner.next();
+               if(username.equals("staff") && password.equals("today123")){
+                   isLoggedInStaff = true;
+                   System.out.println("=============================");
+                   System.out.println("Login Successed");
+               }else{
+                   System.out.println("=============================");
+                   System.out.println("Can't find matched staff account");
+                   System.out.println("=============================");
+                   isInStaffMenu = false;
+                   break;
+               }
+           }
         }
-    }
+
 
 
     public static void main(String[] args) {
@@ -209,10 +317,13 @@ public class Main {
             displaySelection(menuChoice);
 
         } while (true);
-//        movieCollection.insert(new Node(new Movie("basaaaa", "asd", "asd", "asd", Genre.Other, Classification.Mature, "asd")));
-//        movieCollection.insert(new Node(new Movie("c", "asd", "asd", "asd", Genre.Other, Classification.Mature, "asd")));
-//        movieCollection.insert(new Node(new Movie("a", "asd", "asd", "asd", Genre.Other, Classification.Mature, "asd")));
-//        System.out.println(movieCollection.root.left.movie.getTitle());
-//        System.out.println(movieCollection.remove("basaaaa"));
+//        movieCollection.insert(new Node(new Movie("b", "a", "a", "hj", Genre.Other, Classification.General, "a", 1)));
+//        movieCollection.insert(new Node(new Movie("a", "a", "a", "hj", Genre.Other, Classification.General, "a", 1)));
+//        movieCollection.insert(new Node(new Movie("c", "a", "a", "hj", Genre.Other, Classification.General, "a", 1)));
+//        movieCollection.insert(new Node(new Movie("d", "a", "a", "hj", Genre.Other, Classification.General, "a", 1)));
+//        movieCollection.insert(new Node(new Movie("dcccc", "a", "a", "hj", Genre.Other, Classification.General, "a", 1)));
+//        movieCollection.insert(new Node(new Movie("dbbbb", "a", "a", "hj", Genre.Other, Classification.General, "a", 1)));
+//
+//        movieCollection.iterateOver(movieCollection.getRoot());
     }
 }

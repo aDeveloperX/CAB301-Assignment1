@@ -2,17 +2,17 @@ import java.util.ArrayList;
 
 public class MovieCollection {
     //must use binary tree to store
-    public Node root;
+    private Node root;
 
     public MovieCollection() { }
 
-    public Node search(Movie movie){
+    public Node search(String movieName){
         if(root ==null){
             return null;
         }
         Node current = root;
-        while(current.movie.getTitle() != movie.getTitle()){
-            if(movie.getTitle().compareTo(current.movie.getTitle()) == -1){
+        while(!current.movie.getTitle().equals(movieName) ){
+            if(movieName.compareTo(current.movie.getTitle()) == -1){
                 current = current.left;
             }else{
                 current = current.right;
@@ -31,7 +31,7 @@ public class MovieCollection {
             return true;
         }
         //make sure each node is unique
-        if(this.search(node.movie) != null){
+        if(this.search(node.movie.getTitle()) != null){
             return false;
         }
         Node current = root;
@@ -143,4 +143,20 @@ public class MovieCollection {
         return n;
     }
 
+    public void iterateOver(Node node){
+        if(root != null){
+            if(node.left != null){
+                this.iterateOver(node.left);
+            }
+            System.out.println(node.movie.getTitle());
+            if(node.right != null){
+                this.iterateOver(node.right);
+            }
+        }
+
+    }
+
+    public Node getRoot(){
+        return this.root;
+    }
 }
