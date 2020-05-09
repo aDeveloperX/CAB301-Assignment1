@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
@@ -153,13 +154,46 @@ public class Main {
         }
     }
 
+    private static Movie[] quickSort(Movie[] ins ,int start,int end){
+        if(start>=end){
+            return ins;
+        }
+        Movie mid = ins[start];
+        int low = start;
+        int hight = end;
+        while(low < hight){
+            while(low < hight && ins[hight].getBorrowedCounter()>=mid.getBorrowedCounter()){//
+                hight -=1;
+            }
+            ins[low] = ins[hight];
+
+            while(low < hight && ins[low].getBorrowedCounter() < mid.getBorrowedCounter()){
+                low +=1;
+            }
+            ins[hight] = ins[low];
+        }
+        ins[low] = mid;
+        quickSort(ins, start, low-1);
+        quickSort(ins, low+1, end);
+        return ins;
+    }
+
+    //prob bugged out
+    private static void displayTopTenMovies(){
+
+       Movie[] arr = quickSort(movieCollection.toArray(movieCollection.getRoot()), 0, movieCollection.getIndex()-1);
+        for (int i = movieCollection.getIndex() - 1; i > 0 ; i--) {
+
+        }
+    }
+
     private static void memberMenuChoiceHandler(int index){
         switch (index){
             case 1: displayAllMovies(); break;
             case 2: borrowAMovieDVD(); break;
             case 3: returnAMovieDVD(); break;
             case 4: listBorrowedMovies(); break;
-            case 5:  break;
+            case 5: displayTopTenMovies(); break;
             case 0: isInMemberMenu = false; isLoggedInMember=false; currentMemberName = null;
         }
     }
@@ -263,7 +297,11 @@ public class Main {
         System.out.println("=============================");
         System.out.println("Please enter the number of copies");
         int copies = scanner.nextInt();
-        Movie movie = new Movie(name, starring, director, duration, genre, classification, date, copies);
+        ///
+        ///
+        //
+
+        Movie movie = new Movie(name, starring, director, duration, genre, classification, date, copies, 1);
         if(movieCollection.insert(new Node(movie))){
             System.out.println("=============================");
             System.out.println("Movie " + name + " has been added!");
@@ -317,13 +355,21 @@ public class Main {
             displaySelection(menuChoice);
 
         } while (true);
-//        movieCollection.insert(new Node(new Movie("b", "a", "a", "hj", Genre.Other, Classification.General, "a", 1)));
-//        movieCollection.insert(new Node(new Movie("a", "a", "a", "hj", Genre.Other, Classification.General, "a", 1)));
-//        movieCollection.insert(new Node(new Movie("c", "a", "a", "hj", Genre.Other, Classification.General, "a", 1)));
-//        movieCollection.insert(new Node(new Movie("d", "a", "a", "hj", Genre.Other, Classification.General, "a", 1)));
-//        movieCollection.insert(new Node(new Movie("dcccc", "a", "a", "hj", Genre.Other, Classification.General, "a", 1)));
-//        movieCollection.insert(new Node(new Movie("dbbbb", "a", "a", "hj", Genre.Other, Classification.General, "a", 1)));
+//        movieCollection.insert(new Node(new Movie("b", "a", "a", "hj", Genre.Other, Classification.General, "a", 1, 3)));
+//        movieCollection.insert(new Node(new Movie("a", "a", "a", "hj", Genre.Other, Classification.General, "a", 1, 4 )));
+//        movieCollection.insert(new Node(new Movie("c", "a", "a", "hj", Genre.Other, Classification.General, "a", 1, 2)));
+//        movieCollection.insert(new Node(new Movie("d", "a", "a", "hj", Genre.Other, Classification.General, "a", 1, 2)));
+//        movieCollection.insert(new Node(new Movie("dcccc", "a", "a", "hj", Genre.Other, Classification.General, "a", 1, 7)));
+//        movieCollection.insert(new Node(new Movie("dbbbb", "a", "a", "hj", Genre.Other, Classification.General, "a", 1, 19)));
 //
-//        movieCollection.iterateOver(movieCollection.getRoot());
+//        //movieCollection.iterateOver(movieCollection.getRoot());
+//        Movie[] a = movieCollection.toArray(movieCollection.getRoot());
+//
+//
+//        Movie[] ha = quickSort(a, 0, movieCollection.getIndex() - 1);
+//       for(int i = 0; i < movieCollection.getIndex(); i ++){
+//           System.out.println(ha[i].getBorrowedCounter());
+//       }
+
     }
 }

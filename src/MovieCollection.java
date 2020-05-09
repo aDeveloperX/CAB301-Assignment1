@@ -3,6 +3,8 @@ import java.util.ArrayList;
 public class MovieCollection {
     //must use binary tree to store
     private Node root;
+    private Movie[] arr = new Movie[10];
+    private int index = 0;
 
     public MovieCollection() { }
 
@@ -153,8 +155,37 @@ public class MovieCollection {
                 this.iterateOver(node.right);
             }
         }
-
     }
+
+    public Movie[] toArray(Node node){
+        if(root != null){
+            if(node.left != null){
+                this.toArray(node.left);
+            }
+            if(index < 10){
+                arr[index] = node.movie;
+                index++;
+            }
+
+            if(node.right != null){
+                this.toArray(node.right);
+            }
+        }
+        return arr;
+    }
+
+    public int getIndex() {
+        return index;
+    }
+
+    public void resetArr(){
+        for (int i = 0; i < arr.length; i++) {
+            arr[i] = null;
+        }
+        index = 0;
+    }
+
+
 
     public Node getRoot(){
         return this.root;

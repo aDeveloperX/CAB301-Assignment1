@@ -9,7 +9,7 @@ public class Movie {
     private int borrowedCounter = 0;
     private int numberOfCopies = 0;
 
-    public Movie(String title, String starring, String director, String duration, Genre genre, Classification classification, String date, int numberOfCopies) {
+    public Movie(String title, String starring, String director, String duration, Genre genre, Classification classification, String date, int numberOfCopies, int borrowedCounter) {
         this.title = title;
         this.starring = starring;
         this.director = director;
@@ -18,6 +18,7 @@ public class Movie {
         this.classification = classification;
         this.date = date;
         this.numberOfCopies = numberOfCopies;
+        this.borrowedCounter = borrowedCounter;
     }
 
     public String getTitle() {
@@ -38,5 +39,9 @@ public class Movie {
 
     public void returnCopy(){
         this.numberOfCopies++;
+    }
+
+    public int getBorrowedCounter() {
+        return borrowedCounter;
     }
 }
