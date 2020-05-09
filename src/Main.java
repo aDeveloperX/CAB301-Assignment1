@@ -122,6 +122,7 @@ public class Main {
                 System.out.println("=============================");
                 memberCollection.getMember(currentMemberName).borrowMovie(movie);
                 movie.borrow();
+                movie.borrowedCount();
                 System.out.println(movie.getNumberOfCopies());
             }
         }
@@ -164,8 +165,7 @@ public class Main {
     }
 
     private static boolean isNumeric(String str){
-        for (char c : str.toCharArray())
-        {
+        for (char c : str.toCharArray()){
             if (!Character.isDigit(c)) return false;
         }
         return true;

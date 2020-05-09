@@ -28,8 +28,8 @@ public class Movie {
         return numberOfCopies;
     }
 
-    public void setBorrowedCounter(int borrowedCounter) {
-        this.borrowedCounter = borrowedCounter;
+    public void borrowedCount() {
+        this.borrowedCounter++;
     }
 
     public void borrow(){
