@@ -7,6 +7,7 @@ public class Main {
 
     //member control
     private static MemberCollection memberCollection = new MemberCollection();
+    private static MovieCollection movieCollection = new MovieCollection();
 
 
     private static Scanner scanner;
@@ -112,10 +113,66 @@ public class Main {
         System.out.println("The result is: " + memberCollection.getPhoneNumberByName(name));
     }
 
+    private static void staffRemoveDVD(){
+        System.out.println("=============================");
+        System.out.println("Please enter the DVD name");
+        scanner.nextLine();
+        String name = scanner.nextLine();
+        System.out.println(name);
+        System.out.println("=============================");
+        if(movieCollection.remove(name)){
+            System.out.println("DVD " + name + " has been removed!");
+        }else{
+            System.out.println("Failed to remove DVD");
+        }
+    }
+
+    private static void staffAddDVD(){
+        System.out.println("=============================");
+        System.out.println("Please enter the DVD name");
+        scanner.nextLine();
+        String name = scanner.nextLine();
+        System.out.println("=============================");
+        System.out.println("Please enter the DVD starring");
+        String starring = scanner.next();
+        System.out.println("=============================");
+        System.out.println("Please enter the director name");
+        scanner.nextLine();
+        String director = scanner.nextLine();
+        System.out.println("=============================");
+        System.out.println("Please enter the duration");
+        String duration = scanner.next();
+        System.out.println("=============================");
+        System.out.println("Please select a genre using number");
+        Genre.Other.displayAllGenre();
+        int index = scanner.nextInt();
+        Genre genre = Genre.Other.getGenreByIndex(index);
+        System.out.println("=============================");
+        System.out.println("Please select classification using number");
+        Classification.General.displayAllClassification();
+        index = scanner.nextInt();
+        Classification classification = Classification.General.getClassificationByIndex(index);
+        System.out.println("=============================");
+        System.out.println("Please enter the date");
+        String date = scanner.next();
+
+        Movie movie = new Movie(name, starring, director, duration, genre, classification, date);
+        if(movieCollection.insert(new Node(movie))){
+            System.out.println("=============================");
+            System.out.println("Movie " + name + " has been added!");
+        }else{
+            System.out.println("=============================");
+            System.out.println("Failed to add movie");
+        }
+
+
+
+    }
+
     private static void staffMenuChoiceHandler(int index){
         switch (index){
-            case 1:
-            case 2:
+            case 1: staffAddDVD(); break;
+            case 2: staffRemoveDVD(); break;
             case 3: registerNewMember(); break;
             case 4: findMembersNumber(); break;
             case 0: isInStaffMenu = false;
@@ -142,13 +199,20 @@ public class Main {
         }
     }
 
-    public static void main(String[] args) {
-       do {
-           scanner = new Scanner(System.in);
-           displayMainMenu();
-           int menuChoice = scanner.nextInt();
-           displaySelection(menuChoice);
 
-       }while (true);
+    public static void main(String[] args) {
+
+        do {
+            scanner = new Scanner(System.in);
+            displayMainMenu();
+            int menuChoice = scanner.nextInt();
+            displaySelection(menuChoice);
+
+        } while (true);
+//        movieCollection.insert(new Node(new Movie("basaaaa", "asd", "asd", "asd", Genre.Other, Classification.Mature, "asd")));
+//        movieCollection.insert(new Node(new Movie("c", "asd", "asd", "asd", Genre.Other, Classification.Mature, "asd")));
+//        movieCollection.insert(new Node(new Movie("a", "asd", "asd", "asd", Genre.Other, Classification.Mature, "asd")));
+//        System.out.println(movieCollection.root.left.movie.getTitle());
+//        System.out.println(movieCollection.remove("basaaaa"));
     }
 }

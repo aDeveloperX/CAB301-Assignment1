@@ -10,6 +10,18 @@ public enum Classification{
     public String getName(){
         return this.name;
     }
+
+    public void displayAllClassification(){
+        int counter = 1;
+        for (Classification classification : Classification.values()){
+            System.out.println(Integer.toString(counter)+ ". " + classification);
+            counter++;
+        }
+    }
+
+    public Classification getClassificationByIndex(int index){
+        return Classification.values()[index - 1];
+    }
 }
 
 

@@ -1,9 +1,9 @@
 public class Node {
-    int value;
+    Movie movie;
     Node left;
     Node right;
 
-    public Node(int value){
-        this.value = value;
+    public Node(Movie movie){
+        this.movie = movie;
     }
 }
