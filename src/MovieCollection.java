@@ -8,6 +8,11 @@ public class MovieCollection {
 
     public MovieCollection() { }
 
+    /**
+     * search the given username
+     * @param movieName the given username
+     * @return null if no result is found, otherwise return the node
+     */
     public Node search(String movieName){
         if(root ==null){
             return null;
@@ -27,6 +32,11 @@ public class MovieCollection {
         return current;
     }
 
+    /**
+     * insert a node to the BST
+     * @param node the node that is about to be added
+     * @return return true if the given node is added successfully
+     */
     public boolean insert(Node node){
         if(root == null){
             root = node;
@@ -58,6 +68,11 @@ public class MovieCollection {
         return false;
     }
 
+    /**
+     * attempt to remove a node from the BST
+     * @param key the given key
+     * @return true if the node is removed successfully
+     */
     public boolean remove(String key){
         // if the tree is empty
         if(root == null){
@@ -130,6 +145,11 @@ public class MovieCollection {
         return true;
     }
 
+    /**
+     * returns the child node of the given node
+     * @param node the given node
+     * @return the child of the given node
+     */
     private Node getChildNode(Node node){
         Node parent = node;
         Node n = node.right;
@@ -145,6 +165,10 @@ public class MovieCollection {
         return n;
     }
 
+    /**
+     * iterate over the tree and print all results
+     * @param node use this node as "root", every child of this node will be displayed
+     */
     public void iterateOver(Node node){
         if(root != null){
             if(node.left != null){
@@ -159,6 +183,11 @@ public class MovieCollection {
         }
     }
 
+    /**
+     * convert the BST to an array
+     * @param node the node where the iteration starts, normally its the root
+     * @return an converted array
+     */
     public Movie[] toArray(Node node){
         if(root != null){
             if(node.left != null){
@@ -176,10 +205,18 @@ public class MovieCollection {
         return arr;
     }
 
+    /**
+     * return the length of the array
+     * @return the length of the array
+     */
     public int getIndex() {
         return index;
     }
 
+    /**
+     * because the toArray() function is a recursive function and "arr" varible is a global varible, therefore
+     * it need to be reset everytime the toArray() function is called.
+     */
     public void resetArr(){
         for (int i = 0; i < arr.length; i++) {
             arr[i] = null;
@@ -187,8 +224,10 @@ public class MovieCollection {
         index = 0;
     }
 
-
-
+    /**
+     * return the root of the BST
+     * @return the root of the BST
+     */
     public Node getRoot(){
         return this.root;
     }

@@ -17,6 +17,11 @@ public class Member {
         return this.name;
     }
 
+    /**
+     * check if the password is correct
+     * @param password the attempted password
+     * @return true if the password is correct
+     */
     public boolean isPasswordCorrect(String password){
         return password.equals(this.password);
     }
@@ -25,6 +30,11 @@ public class Member {
         return this.phoneNumber;
     }
 
+    /**
+     * the user borrows a movie
+     * @param movie the movie that the user borrowed
+     * @return true if the movie is borrowed successfully
+     */
     public boolean borrowMovie(Movie movie){
        if(movieCollection.insert(new Node(movie))){
            return true;
@@ -32,6 +42,11 @@ public class Member {
        return false;
     }
 
+    /**
+     * the user returns a movie
+     * @param movie the given movie
+     * @return true if the movie is returned successfully
+     */
     public boolean returnMovie(Movie movie){
        if(movieCollection.remove(movie.getTitle())){
 
@@ -40,10 +55,18 @@ public class Member {
        return false;
     }
 
+    /**
+     * check if the user has already borrowed the movie
+     * @param title the title of the movie
+     * @return return true if the user has the movie already
+     */
     public boolean hasMovie(String title){
         return movieCollection.search(title) != null;
     }
 
+    /**
+     * show all movies borrowed by the user
+     */
     public void displayAllBorrowedMovies(){
         movieCollection.iterateOver(movieCollection.getRoot());
     }

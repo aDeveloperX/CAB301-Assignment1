@@ -28,6 +28,9 @@ public class Movie {
         return numberOfCopies;
     }
 
+    /**
+     * simulate the movie is borrowed, remove 1 copy and add 1 to the borrowed counter
+     */
     public void borrow(){
         this.numberOfCopies--;
         this.borrowedCounter++;

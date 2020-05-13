@@ -7,10 +7,9 @@ public enum Classification{
         this.name = str;
     }
 
-    public String getName(){
-        return this.name;
-    }
-
+    /**
+     * iterate over all the classfications
+     */
     public void displayAllClassification(){
         int counter = 1;
         for (Classification classification : Classification.values()){
@@ -19,6 +18,11 @@ public enum Classification{
         }
     }
 
+    /**
+     * return a single classification by the given index
+     * @param index the index given
+     * @return the right classification
+     */
     public Classification getClassificationByIndex(int index){
         return Classification.values()[index - 1];
     }

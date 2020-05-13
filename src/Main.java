@@ -166,6 +166,9 @@ public class Main {
         System.out.println("========================================");
     }
 
+    /**
+     * return a movie DVD
+     */
     private static void returnAMovieDVD(){
         System.out.println("======================");
         System.out.println("Please enter the name of the movie that you want to return");
@@ -184,16 +187,22 @@ public class Main {
         }
     }
 
-    //prob bugged out
+    /**
+     * use bubble sort to sort the top10 movies
+     */
     private static void displayTopTenMovies(){
         Movie[] arr = bubbleSort(movieCollection.toArray(movieCollection.getRoot()), movieCollection.getIndex());
         System.out.println("==================Top10 Popular Movies===================");
         for (int i = 0; i < movieCollection.getIndex() ; i++) {
-              System.out.println(Integer.toString(i + 1) + ". "+ arr[i].getTitle());
+              System.out.println(i + 1 + ". "+ arr[i].getTitle());
         }
         movieCollection.resetArr();
     }
 
+    /**
+     * call the right function with the given index
+     * @param index the user's choice
+     */
     private static void memberMenuChoiceHandler(int index){
         switch (index){
             case 1: displayAllMovies(); break;
@@ -205,6 +214,11 @@ public class Main {
         }
     }
 
+    /**
+     * check if a string is numeric
+     * @param str the given string
+     * @return return true if it's numeric
+     */
     private static boolean isNumeric(String str){
         for (char c : str.toCharArray()){
             if (!Character.isDigit(c)) return false;
@@ -212,6 +226,9 @@ public class Main {
         return true;
     }
 
+    /**
+     * register a new member
+     */
     private static void registerNewMember(){
         System.out.println("=============================");
          System.out.println("Please enter the member's surname");
@@ -251,6 +268,9 @@ public class Main {
          System.out.println("User Registered!");
     }
 
+    /**
+     * find a member's phone number by the given username
+     */
     private static void findMembersNumber(){
         System.out.println("=============================");
         System.out.println("Please enter the username");
@@ -258,6 +278,9 @@ public class Main {
         System.out.println("The result is: " + memberCollection.getPhoneNumberByName(name));
     }
 
+    /**
+     * staff removes a DVD by the given movieName from the collection
+     */
     private static void staffRemoveDVD(){
         System.out.println("=============================");
         System.out.println("Please enter the DVD name");
@@ -273,6 +296,9 @@ public class Main {
         }
     }
 
+    /**
+     * staff adds a DVD to the collection
+     */
     private static void staffAddDVD(){
         System.out.println("=============================");
         System.out.println("Please enter the DVD name");
@@ -326,6 +352,10 @@ public class Main {
         }
     }
 
+    /**
+     * call the right function with the user's choice
+     * @param index the user's input
+     */
     private static void staffMenuChoiceHandler(int index){
         switch (index){
             case 1: staffAddDVD(); break;
@@ -336,6 +366,9 @@ public class Main {
         }
     }
 
+    /**
+     * login a staff, check the username and password
+     */
     private static void loginStaff(){
 
            while(!isLoggedInStaff){
@@ -345,6 +378,7 @@ public class Main {
                System.out.println("=============================");
                System.out.println("Please enter password");
                String password = scanner.next();
+               //username and password check
                if(username.equals("staff") && password.equals("today123")){
                    isLoggedInStaff = true;
                    System.out.println("=============================");
@@ -358,6 +392,13 @@ public class Main {
                }
            }
         }
+
+    /**
+     * bubble sort algorithm
+     * @param movies an array of movies
+     * @param length the length of the array
+     * @return returns a sorted array base on the times its been borrowed
+     */
     public static Movie[] bubbleSort(Movie[] movies, int length) {
 
         for (int i = 0; i < length - 1; i++) {
