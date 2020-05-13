@@ -14,12 +14,18 @@ public class Main {
 
     private static Scanner scanner;
 
+    /**
+     * display the main menu
+     */
     private static void displayMainMenu(){
         System.out.println("Welcome to the Commuity Library\n==========Main Menu==========");
         System.out.println("1. Staff Login\n2. Member Login\n0. Exit");
         System.out.println("=============================\n\nPlease make a selection (1-2. or 0 to exit)");
     }
 
+    /**
+     * display the staff menu
+     */
     private static void displayStaffMenu(){
         System.out.println("==========Staff Menu==========");
         System.out.println("1. Add a new movie DVD\n2. Remove a movie DVD\n3. Register a new Member\n4. Find a registered member's phone number");
@@ -27,6 +33,9 @@ public class Main {
         System.out.println("==============================\nPlease make a selection (1-4. or 0 to return to main menu):");
     }
 
+    /**
+     * display the member menu
+     */
     private static void displayMemberMenu(){
         System.out.println("==========Member Menu==========");
         System.out.println("1. Display all movies\n2. Borrow a movie DVD\n3. Return a movie DVD\n4. List current borrowed movie DVDs \n5. Display top 10 most popular movies");
@@ -34,6 +43,10 @@ public class Main {
         System.out.println("===============================\nPlease make a selection (1-5. or 0 to return to main menu):");
     }
 
+    /**
+     * display the menu based on the input
+     * @param index the users choice of menu
+     */
     private static void displaySelection(int index){
         switch (index){
             case 1:
@@ -49,6 +62,9 @@ public class Main {
         }
     }
 
+    /**
+     * loop for staff menu
+     */
     private static void staffMenuHandler(){
         do{
             loginStaff();
@@ -60,6 +76,9 @@ public class Main {
         }while (isInStaffMenu);
     }
 
+    /**
+     * loop for member menu
+     */
     private static void memberMenuHandler(){
         do{
             loginMember();
@@ -71,6 +90,9 @@ public class Main {
         }while (isInMemberMenu);
     }
 
+    /**
+     * login a member base on the memberCollection
+     */
     private static void loginMember(){
         System.out.println("=============================");
         System.out.println("Please enter the member's fullname");
@@ -95,12 +117,18 @@ public class Main {
         }
     }
 
+    /**
+     * display all movies in the record
+     */
     private static void displayAllMovies(){
         System.out.println("=========All Movies=========");
         movieCollection.iterateOver(movieCollection.getRoot());
         System.out.println("=============================");
     }
 
+    /**
+     * borrow a movie
+     */
     private static void borrowAMovieDVD(){
         System.out.println("=============================");
         System.out.println("Please enter the name of the movie you want to borrow");
@@ -116,18 +144,22 @@ public class Main {
                 System.out.println("You've already borrowed this movie!");
                 System.out.println("=============================");
                 //avoid there's no copies left
+            }else if(movie.getNumberOfCopies() <= 0){
+                System.out.println("There's no copy of the selected movie left!");
+                System.out.println("=============================");
             }else{
                 System.out.println("You borrowed this movie!");
                 System.out.println("=============================");
                 memberCollection.getMember(currentMemberName).borrowMovie(movie);
                 movie.borrow();
-                //debug
-                System.out.println(movie.getNumberOfCopies());
             }
         }
 
     }
 
+    /**
+     * display all movies the user has borrowed
+     */
     private static void listBorrowedMovies(){
         System.out.println("========Movies You have Borrowed========");
         memberCollection.getMember(currentMemberName).displayAllBorrowedMovies();
@@ -259,12 +291,20 @@ public class Main {
         System.out.println("=============================");
         System.out.println("Please select a genre using number");
         Genre.Other.displayAllGenre();
+        System.out.println("=============================");
         int index = scanner.nextInt();
+        if(index > 9){
+            index = 8;
+        }
         Genre genre = Genre.Other.getGenreByIndex(index);
         System.out.println("=============================");
         System.out.println("Please select classification using number");
         Classification.General.displayAllClassification();
+        System.out.println("=============================");
         index = scanner.nextInt();
+        if(index > 4){
+            index = 4;
+        }
         Classification classification = Classification.General.getClassificationByIndex(index);
         System.out.println("=============================");
         System.out.println("Please enter the date");
@@ -272,9 +312,9 @@ public class Main {
         System.out.println("=============================");
         System.out.println("Please enter the number of copies");
         int copies = scanner.nextInt();
-        ///
-        ///
-        //
+        if(copies < 1){
+            copies = 1;
+        }
 
         Movie movie = new Movie(name, starring, director, duration, genre, classification, date, copies);
         if(movieCollection.insert(new Node(movie))){
@@ -341,18 +381,5 @@ public class Main {
             int menuChoice = scanner.nextInt();
             displaySelection(menuChoice);
         } while (true);
-//        movieCollection.insert(new Node(new Movie("b", "a", "a", "hj", Genre.Other, Classification.General, "a", 1, 3)));
-//        movieCollection.insert(new Node(new Movie("c", "a", "a", "hj", Genre.Other, Classification.General, "a", 1, 3)));
-//        movieCollection.insert(new Node(new Movie("a", "a", "a", "hj", Genre.Other, Classification.General, "a", 1, 4 )));
-//        movieCollection.insert(new Node(new Movie("cc", "a", "a", "hj", Genre.Other, Classification.General, "a", 1, 2)));
-//        movieCollection.insert(new Node(new Movie("d", "a", "a", "hj", Genre.Other, Classification.General, "a", 1, 2)));
-//        movieCollection.insert(new Node(new Movie("dcccc", "a", "a", "hj", Genre.Other, Classification.General, "a", 1, 7)));
-//        movieCollection.insert(new Node(new Movie("dbbbb", "a", "a", "hj", Genre.Other, Classification.General, "a", 1, 19)));
-
-        //movieCollection.iterateOver(movieCollection.getRoot());
-        //movieCollection.toArray(movieCollection.getRoot());
-        //displayTopTenMovies();
-
-
     }
 }

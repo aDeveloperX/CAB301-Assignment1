@@ -150,7 +150,9 @@ public class MovieCollection {
             if(node.left != null){
                 this.iterateOver(node.left);
             }
-            System.out.println(node.movie.getTitle());
+            if(node.movie.getNumberOfCopies() > 0){
+                System.out.println(node.movie.getTitle() + "        Copies: " + node.movie.getNumberOfCopies());
+            }
             if(node.right != null){
                 this.iterateOver(node.right);
             }
