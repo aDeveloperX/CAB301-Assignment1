@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
@@ -321,7 +320,7 @@ public class Main {
         }
     public static Movie[] bubbleSort(Movie[] movies, int length) {
 
-        for (int i = 0; i < length - 1; i++) {// 控制趟数
+        for (int i = 0; i < length - 1; i++) {
             for (int j = 0; j < length - i - 1; j++) {
 
                 if (movies[j].getBorrowedCounter() < movies[j + 1].getBorrowedCounter()) {
@@ -341,7 +340,6 @@ public class Main {
             displayMainMenu();
             int menuChoice = scanner.nextInt();
             displaySelection(menuChoice);
-
         } while (true);
 //        movieCollection.insert(new Node(new Movie("b", "a", "a", "hj", Genre.Other, Classification.General, "a", 1, 3)));
 //        movieCollection.insert(new Node(new Movie("c", "a", "a", "hj", Genre.Other, Classification.General, "a", 1, 3)));
