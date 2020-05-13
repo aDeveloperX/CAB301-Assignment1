@@ -13,7 +13,6 @@ public class Main {
     private static MemberCollection memberCollection = new MemberCollection();
     private static MovieCollection movieCollection = new MovieCollection();
 
-
     private static Scanner scanner;
 
     private static void displayMainMenu(){
@@ -123,7 +122,7 @@ public class Main {
                 System.out.println("=============================");
                 memberCollection.getMember(currentMemberName).borrowMovie(movie);
                 movie.borrow();
-                movie.borrowedCount();
+                //debug
                 System.out.println(movie.getNumberOfCopies());
             }
         }
@@ -154,37 +153,14 @@ public class Main {
         }
     }
 
-    private static Movie[] quickSort(Movie[] ins ,int start,int end){
-        if(start>=end){
-            return ins;
-        }
-        Movie mid = ins[start];
-        int low = start;
-        int hight = end;
-        while(low < hight){
-            while(low < hight && ins[hight].getBorrowedCounter()>=mid.getBorrowedCounter()){//
-                hight -=1;
-            }
-            ins[low] = ins[hight];
-
-            while(low < hight && ins[low].getBorrowedCounter() < mid.getBorrowedCounter()){
-                low +=1;
-            }
-            ins[hight] = ins[low];
-        }
-        ins[low] = mid;
-        quickSort(ins, start, low-1);
-        quickSort(ins, low+1, end);
-        return ins;
-    }
-
     //prob bugged out
     private static void displayTopTenMovies(){
-
-       Movie[] arr = quickSort(movieCollection.toArray(movieCollection.getRoot()), 0, movieCollection.getIndex()-1);
-        for (int i = movieCollection.getIndex() - 1; i > 0 ; i--) {
-
+        Movie[] arr = bubbleSort(movieCollection.toArray(movieCollection.getRoot()), movieCollection.getIndex());
+        System.out.println("==================Top10 Popular Movies===================");
+        for (int i = 0; i < movieCollection.getIndex() ; i++) {
+              System.out.println(Integer.toString(i + 1) + ". "+ arr[i].getTitle());
         }
+        movieCollection.resetArr();
     }
 
     private static void memberMenuChoiceHandler(int index){
@@ -221,7 +197,6 @@ public class Main {
              System.out.println("=============================");
              System.out.println("Please enter the member's givenname");
              givenname = scanner.next();
-
          }
         System.out.println("=============================");
          System.out.println("Please enter the member's address");
@@ -261,6 +236,7 @@ public class Main {
         System.out.println("=============================");
         if(movieCollection.remove(name)){
             System.out.println("DVD " + name + " has been removed!");
+            //
         }else{
             System.out.println("Failed to remove DVD");
         }
@@ -301,7 +277,7 @@ public class Main {
         ///
         //
 
-        Movie movie = new Movie(name, starring, director, duration, genre, classification, date, copies, 1);
+        Movie movie = new Movie(name, starring, director, duration, genre, classification, date, copies);
         if(movieCollection.insert(new Node(movie))){
             System.out.println("=============================");
             System.out.println("Movie " + name + " has been added!");
@@ -343,8 +319,20 @@ public class Main {
                }
            }
         }
+    public static Movie[] bubbleSort(Movie[] movies, int length) {
 
+        for (int i = 0; i < length - 1; i++) {// 控制趟数
+            for (int j = 0; j < length - i - 1; j++) {
 
+                if (movies[j].getBorrowedCounter() < movies[j + 1].getBorrowedCounter()) {
+                    Movie temp = movies[j];
+                    movies[j] = movies[j + 1];
+                    movies[j + 1] = temp;
+                }
+            }
+        }
+     return movies;
+    }
 
     public static void main(String[] args) {
 
@@ -356,20 +344,17 @@ public class Main {
 
         } while (true);
 //        movieCollection.insert(new Node(new Movie("b", "a", "a", "hj", Genre.Other, Classification.General, "a", 1, 3)));
+//        movieCollection.insert(new Node(new Movie("c", "a", "a", "hj", Genre.Other, Classification.General, "a", 1, 3)));
 //        movieCollection.insert(new Node(new Movie("a", "a", "a", "hj", Genre.Other, Classification.General, "a", 1, 4 )));
-//        movieCollection.insert(new Node(new Movie("c", "a", "a", "hj", Genre.Other, Classification.General, "a", 1, 2)));
+//        movieCollection.insert(new Node(new Movie("cc", "a", "a", "hj", Genre.Other, Classification.General, "a", 1, 2)));
 //        movieCollection.insert(new Node(new Movie("d", "a", "a", "hj", Genre.Other, Classification.General, "a", 1, 2)));
 //        movieCollection.insert(new Node(new Movie("dcccc", "a", "a", "hj", Genre.Other, Classification.General, "a", 1, 7)));
 //        movieCollection.insert(new Node(new Movie("dbbbb", "a", "a", "hj", Genre.Other, Classification.General, "a", 1, 19)));
-//
-//        //movieCollection.iterateOver(movieCollection.getRoot());
-//        Movie[] a = movieCollection.toArray(movieCollection.getRoot());
-//
-//
-//        Movie[] ha = quickSort(a, 0, movieCollection.getIndex() - 1);
-//       for(int i = 0; i < movieCollection.getIndex(); i ++){
-//           System.out.println(ha[i].getBorrowedCounter());
-//       }
+
+        //movieCollection.iterateOver(movieCollection.getRoot());
+        //movieCollection.toArray(movieCollection.getRoot());
+        //displayTopTenMovies();
+
 
     }
 }
