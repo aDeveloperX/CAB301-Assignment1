@@ -14,7 +14,7 @@ public class MovieCollection {
      * @return null if no result is found, otherwise return the node
      */
     public Node search(String movieName){
-        if(root ==null){
+        if(root == null){
             return null;
         }
         Node current = root;
@@ -175,7 +175,25 @@ public class MovieCollection {
                 this.iterateOver(node.left);
             }
             if(node.movie.getNumberOfCopies() > 0){
-                System.out.println(node.movie.getTitle() + "        Copies: " + node.movie.getNumberOfCopies());
+                System.out.println(node.movie.toString());
+            }
+            if(node.right != null){
+                this.iterateOver(node.right);
+            }
+        }
+    }
+
+    /**
+     * iterate over the tree and print all results
+     * @param node use this node as "root", every child of this node will be displayed
+     */
+    public void iterateOverForMember(Node node){
+        if(root != null){
+            if(node.left != null){
+                this.iterateOver(node.left);
+            }
+            if(node.movie.getNumberOfCopies() > 0){
+                System.out.println(node.movie.getTitle());
             }
             if(node.right != null){
                 this.iterateOver(node.right);

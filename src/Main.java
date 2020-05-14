@@ -123,7 +123,6 @@ public class Main {
     private static void displayAllMovies(){
         System.out.println("=========All Movies=========");
         movieCollection.iterateOver(movieCollection.getRoot());
-        System.out.println("=============================");
     }
 
     /**
@@ -149,7 +148,6 @@ public class Main {
                 System.out.println("=============================");
             }else{
                 System.out.println("You borrowed this movie!");
-                System.out.println("=============================");
                 memberCollection.getMember(currentMemberName).borrowMovie(movie);
                 movie.borrow();
             }

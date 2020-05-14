@@ -68,7 +68,7 @@ public class Member {
      * show all movies borrowed by the user
      */
     public void displayAllBorrowedMovies(){
-        movieCollection.iterateOver(movieCollection.getRoot());
+        movieCollection.iterateOverForMember(movieCollection.getRoot());
     }
 
     public MovieCollection getMovieCollection() {

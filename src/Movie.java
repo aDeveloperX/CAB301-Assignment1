@@ -43,4 +43,17 @@ public class Movie {
     public int getBorrowedCounter() {
         return borrowedCounter;
     }
+
+    @Override
+    public String toString(){
+        return "Title: " + this.title +
+                "\nStarring: " + this.starring +
+                "\nDirector: " + director +
+                "\nDuration: " + duration +
+                "\nGenre: " + genre +
+                "\nClassification: " + classification +
+                "\nDate: " + date +
+                "\nCopies: " + numberOfCopies +
+                "\n";
+    }
 }
