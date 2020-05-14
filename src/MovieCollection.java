@@ -174,9 +174,7 @@ public class MovieCollection {
             if(node.left != null){
                 this.iterateOver(node.left);
             }
-            if(node.movie.getNumberOfCopies() > 0){
                 System.out.println(node.movie.toString());
-            }
             if(node.right != null){
                 this.iterateOver(node.right);
             }
@@ -192,9 +190,7 @@ public class MovieCollection {
             if(node.left != null){
                 this.iterateOver(node.left);
             }
-            if(node.movie.getNumberOfCopies() > 0){
                 System.out.println(node.movie.getTitle());
-            }
             if(node.right != null){
                 this.iterateOver(node.right);
             }
@@ -211,11 +207,8 @@ public class MovieCollection {
             if(node.left != null){
                 this.toArray(node.left);
             }
-            if(index < 10){
                 arr[index] = node.movie;
                 index++;
-            }
-
             if(node.right != null){
                 this.toArray(node.right);
             }

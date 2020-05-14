@@ -173,15 +173,17 @@ public class Main {
         scanner.nextLine();
         String name = scanner.nextLine();
         Member member =  memberCollection.getMember(currentMemberName);
-        if(member.hasMovie(name)){
+        if(member.hasMovie(name) && movieCollection.search(name) != null){
            member.returnMovie(member.getMovieCollection().search(name).movie);
            movieCollection.search(name).movie.returnCopy();
             System.out.println("You have returned this movie");
-            System.out.println("======================");
             System.out.println(movieCollection.search(name).movie.getNumberOfCopies());
-        }else{
+        }else if(member.hasMovie(name) && movieCollection.search(name) == null){
+            member.returnMovie(member.getMovieCollection().search(name).movie);
+            System.out.println("You have returned this movie, but this movie has been removed by the staff!");
+        }
+        else{
             System.out.println("Can't find the movie name from your borrowed movies");
-            System.out.println("======================");
         }
     }
 
@@ -398,10 +400,8 @@ public class Main {
      * @return returns a sorted array base on the times its been borrowed
      */
     public static Movie[] bubbleSort(Movie[] movies, int length) {
-
         for (int i = 0; i < length - 1; i++) {
             for (int j = 0; j < length - i - 1; j++) {
-
                 if (movies[j].getBorrowedCounter() < movies[j + 1].getBorrowedCounter()) {
                     Movie temp = movies[j];
                     movies[j] = movies[j + 1];

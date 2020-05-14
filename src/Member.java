@@ -49,7 +49,6 @@ public class Member {
      */
     public boolean returnMovie(Movie movie){
        if(movieCollection.remove(movie.getTitle())){
-
            return true;
        }
        return false;
