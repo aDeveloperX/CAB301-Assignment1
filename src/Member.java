@@ -36,10 +36,7 @@ public class Member {
      * @return true if the movie is borrowed successfully
      */
     public boolean borrowMovie(Movie movie){
-       if(movieCollection.insert(new Node(movie))){
-           return true;
-       }
-       return false;
+        return movieCollection.insert(new Node(movie));
     }
 
     /**
@@ -48,10 +45,7 @@ public class Member {
      * @return true if the movie is returned successfully
      */
     public boolean returnMovie(Movie movie){
-       if(movieCollection.remove(movie.getTitle())){
-           return true;
-       }
-       return false;
+        return movieCollection.remove(movie.getTitle());
     }
 
     /**
