@@ -20,7 +20,7 @@ public class Main {
     private static void displayMainMenu(){
         System.out.println("Welcome to the Commuity Library\n==========Main Menu==========");
         System.out.println("1. Staff Login\n2. Member Login\n0. Exit");
-        System.out.println("=============================\n\nPlease make a selection (1-2. or 0 to exit)");
+        System.out.println("==============================\n\nPlease make a selection (1-2. or 0 to exit)");
     }
 
     /**
@@ -146,8 +146,13 @@ public class Main {
             }else if(movie.getNumberOfCopies() <= 0){
                 System.out.println("There's no copy of the selected movie left!");
                 System.out.println("=============================");
-            }else{
+            }else if( memberCollection.getMember(currentMemberName).getMovieCounter() >= 10){
+                System.out.println("You can only borrow up to 10 movies!");
+                System.out.println("=============================");
+            }
+            else{
                 System.out.println("You borrowed this movie!");
+                memberCollection.getMember(currentMemberName).increaseMovieCounter();
                 memberCollection.getMember(currentMemberName).borrowMovie(movie);
                 movie.borrow();
             }
@@ -161,7 +166,6 @@ public class Main {
     private static void listBorrowedMovies(){
         System.out.println("========Movies You have Borrowed========");
         memberCollection.getMember(currentMemberName).displayAllBorrowedMovies();
-        System.out.println("========================================");
     }
 
     /**
@@ -176,8 +180,8 @@ public class Main {
         if(member.hasMovie(name) && movieCollection.search(name) != null){
            member.returnMovie(member.getMovieCollection().search(name).movie);
            movieCollection.search(name).movie.returnCopy();
+            memberCollection.getMember(currentMemberName).decreseMovieCounter();
             System.out.println("You have returned this movie");
-            System.out.println(movieCollection.search(name).movie.getNumberOfCopies());
         }else if(member.hasMovie(name) && movieCollection.search(name) == null){
             member.returnMovie(member.getMovieCollection().search(name).movie);
             System.out.println("You have returned this movie, but this movie has been removed by the staff!");
@@ -193,8 +197,14 @@ public class Main {
     private static void displayTopTenMovies(){
         Movie[] arr = bubbleSort(movieCollection.toArray(movieCollection.getRoot()), movieCollection.getIndex());
         System.out.println("==================Top10 Popular Movies===================");
-        for (int i = 0; i < movieCollection.getIndex() ; i++) {
-              System.out.println(i + 1 + ". "+ arr[i].getTitle());
+        if(movieCollection.getIndex() < 10){
+            for (int i = 0; i < movieCollection.getIndex() ; i++) {
+                System.out.println(i + 1 + ". "+ arr[i].getTitle() + "   Frequency: " + arr[i].getBorrowedCounter());
+            }
+        }else{
+            for (int i = 0; i < 10 ; i++) {
+                System.out.println(i + 1 + ". "+ arr[i].getTitle() + "   Frequency: " + arr[i].getBorrowedCounter());
+            }
         }
         movieCollection.resetArr();
     }
@@ -286,7 +296,6 @@ public class Main {
         System.out.println("Please enter the DVD name");
         scanner.nextLine();
         String name = scanner.nextLine();
-        System.out.println(name);
         System.out.println("=============================");
         if(movieCollection.remove(name)){
             System.out.println("DVD " + name + " has been removed!");
@@ -417,6 +426,17 @@ public class Main {
         do {
             scanner = new Scanner(System.in);
             displayMainMenu();
+            movieCollection.insert(new Node(new Movie("a", "a", "a", "sd",Genre.Other, Classification.Mature, "a", 13)));
+            movieCollection.insert(new Node(new Movie("b", "a", "a", "sd",Genre.Other, Classification.Mature, "a", 13)));
+            movieCollection.insert(new Node(new Movie("c", "a", "a", "sd",Genre.Other, Classification.Mature, "a", 13)));
+            movieCollection.insert(new Node(new Movie("d", "a", "a", "sd",Genre.Other, Classification.Mature, "a", 13)));
+            movieCollection.insert(new Node(new Movie("e", "a", "a", "sd",Genre.Other, Classification.Mature, "a", 13)));
+            movieCollection.insert(new Node(new Movie("f", "a", "a", "sd",Genre.Other, Classification.Mature, "a", 13)));
+            movieCollection.insert(new Node(new Movie("g", "a", "a", "sd",Genre.Other, Classification.Mature, "a", 13)));
+            movieCollection.insert(new Node(new Movie("h", "a", "a", "sd",Genre.Other, Classification.Mature, "a", 13)));
+            movieCollection.insert(new Node(new Movie("i", "a", "a", "sd",Genre.Other, Classification.Mature, "a", 13)));
+            movieCollection.insert(new Node(new Movie("j", "a", "a", "sd",Genre.Other, Classification.Mature, "a", 13)));
+            movieCollection.insert(new Node(new Movie("k", "a", "a", "sd",Genre.Other, Classification.Mature, "a", 13)));
             int menuChoice = scanner.nextInt();
             displaySelection(menuChoice);
         } while (true);

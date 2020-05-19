@@ -3,7 +3,7 @@ import java.util.ArrayList;
 public class MovieCollection {
     //must use binary tree to store
     private Node root;
-    private Movie[] arr = new Movie[10];
+    private Movie[] arr = new Movie[100];
     private int index = 0;
 
     public MovieCollection() { }
@@ -188,11 +188,11 @@ public class MovieCollection {
     public void iterateOverForMember(Node node){
         if(root != null){
             if(node.left != null){
-                this.iterateOver(node.left);
-            }
-                System.out.println(node.movie.getTitle());
+                this.iterateOverForMember(node.left);
+        }
+                System.out.println(node.movie.getTitle()+ "  Frequency: " + node.movie.getBorrowedCounter());
             if(node.right != null){
-                this.iterateOver(node.right);
+                this.iterateOverForMember(node.right);
             }
         }
     }

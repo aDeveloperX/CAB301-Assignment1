@@ -3,7 +3,10 @@ public class Member {
     private String address;
     private String phoneNumber;
     private String password;
+    private int movieCounter = 0;
     private MovieCollection movieCollection;
+
+
 
     public Member(String surname, String givenname, String address, String phoneNumber, String password) {
         this.name = surname+givenname;
@@ -46,6 +49,28 @@ public class Member {
      */
     public boolean returnMovie(Movie movie){
         return movieCollection.remove(movie.getTitle());
+    }
+
+    /**
+     * get the number of movies this user has
+     * @return the number of movies
+     */
+    public int getMovieCounter() {
+        return movieCounter;
+    }
+
+    /**
+     * increase the number of movies by 1
+     */
+    public void increaseMovieCounter(){
+        movieCounter++;
+    }
+
+    /**
+     * decrease the number of movies by 1
+     */
+    public void decreseMovieCounter(){
+        movieCounter--;
     }
 
     /**
